@@ -1,7 +1,9 @@
 *.csv
 *.dat
 *.iml
+.npm
 *.log
+.idea
 *.out
 *.pid
 *.seed
