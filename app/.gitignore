@@ -13,7 +13,6 @@
 *.tgz
 *.xml
 .DS_Store
-.idea
 .project
 .strong-pm
 coverage
