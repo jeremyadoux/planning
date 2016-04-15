@@ -1,0 +1,32 @@
+{
+  "name": "project",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "team": {
+      "type": "belongsTo",
+      "model": "team",
+      "foreignKey": ""
+    },
+    "plannings": {
+      "type": "hasMany",
+      "model": "planning",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

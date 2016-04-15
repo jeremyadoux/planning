@@ -1,0 +1,37 @@
+{
+  "name": "collaborator",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "team": {
+      "type": "belongsTo",
+      "model": "team",
+      "foreignKey": ""
+    },
+    "plannings": {
+      "type": "hasMany",
+      "model": "planning",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

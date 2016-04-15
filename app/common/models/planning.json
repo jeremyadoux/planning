@@ -1,0 +1,32 @@
+{
+  "name": "planning",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "nbHours": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "collaborator": {
+      "type": "belongsTo",
+      "model": "collaborator",
+      "foreignKey": ""
+    },
+    "project": {
+      "type": "belongsTo",
+      "model": "project",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
