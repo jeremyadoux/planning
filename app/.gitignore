@@ -13,6 +13,7 @@
 *.tgz
 *.xml
 .DS_Store
+vendor
 .project
 .strong-pm
 coverage
