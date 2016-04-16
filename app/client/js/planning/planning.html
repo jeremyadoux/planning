@@ -1,0 +1,40 @@
+<h1>La plannification</h1>
+<div class="row">
+  <div class="col-md-12" role="main">
+
+
+    <table class="table table-bordered">
+      <thead> <!-- En-tête du tableau -->
+      <tr>
+        <th>Team</th>
+        <th>Collaborateur</th>
+        <th  ng-click="vm.previousMonth()"><<</th>
+        <th colspan="{{vm.dataDay - 2}}">{{vm.getCurrentMonthName()}} {{vm.currentYears}}</th>
+        <th ng-click="vm.nextMonth()">>></th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="2"></td>
+          <td ng-repeat="i in vm.getNumber(vm.dataDay) track by $index">{{vm.getCurrentDayName($index + 1)}}</td>
+        </tr>
+        <tr>
+          <td colspan="2"></td>
+          <td ng-repeat="i in vm.getNumber(vm.dataDay) track by $index">{{$index + 1}}</td>
+        </tr>
+        <tr ng-repeat-start="team in vm.teamListData">
+          <td rowspan="{{team.collaborators.length}}">
+            {{team.name}}
+          </td>
+          <td>{{team.collaborators[0].name}}</td>
+          <td ng-repeat="i in vm.getNumber(vm.dataDay) track by $index" ng-style="vm.getColorDay($index + 1, team.collaborators[0].id)"></td>
+        </tr>
+        <tr ng-repeat="collab in team.collaborators track by $index" ng-show="$index > 0">
+          <td>{{collab.name}}</td>
+          <td ng-repeat="i in vm.getNumber(vm.dataDay) track by $index" ng-style="vm.getColorDay($index + 1, collab.id)"></td>
+        </tr>
+        <tr style="display: none;" ng-repeat-end></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

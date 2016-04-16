@@ -5,13 +5,12 @@
     .module('planning')
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
       $stateProvider
-        .state('planning', {
-          url: '/planning',
-          templateUrl: 'js/planning/planning.html',
-          controller: 'PlanningController',
+        .state('project', {
+          url: '/project',
+          templateUrl: 'js/project/project.html',
+          controller: 'ProjectController',
           controllerAs: 'vm'
         });
-      $urlRouterProvider.otherwise('planning');
-  }]);
+    }]);
 
 })();

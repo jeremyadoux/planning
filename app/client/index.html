@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="planning">
 <head lang="en">
   <meta charset="UTF-8">
   <title>Plannification des équipes</title>
@@ -7,53 +7,71 @@
   <link type="text/css" href="vendor/angular-flash-alert/dist/angular-flash.css" rel="stylesheet">
   <link type="text/css" href="vendor/ng-dialog/css/ngDialog.css" rel="stylesheet">
   <link type="text/css" href="vendor/jquery-ui/themes/base/all.css" rel="stylesheet">
+  <link type="text/css" href="css/custom.css" rel="stylesheet">
 </head>
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <header role="banner" id="top" class="navbar navbar-inverse navbar-static-top bs-docs-nav">
     <div class="container">
       <div class="navbar-header">
-        <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+        <button aria-expanded="false" aria-controls="bs-navbar" data-target="#bs-navbar" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
           <span class="sr-only">Navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="#" class="navbar-brand"></a>
       </div>
-      <div class="navbar-collapse collapse" id="navbar">
+      <nav class="collapse navbar-collapse" id="bs-navbar">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Accueil</a></li>
-          <li><a href="#about">Planning</a></li>
-          <li><a href="#about">Team</a></li>
-          <li><a href="#about">Collaborateur</a></li>
-          <li><a href="#about">Mon profil</a></li>
+          <li>
+            <a ui-sref="planning" ui-sref-active="active">Planning</a>
+          </li>
+          <li>
+            <a ui-sref="project" ui-sref-active="active">Projets</a>
+          </li>
+          <li>
+            <a href="../components/">Team</a>
+          </li>
+          <li>
+            <a href="../components/">Collaborateurs</a>
+          </li>
+          <li>
+            <a href="../components/">Mon profil</a>
+          </li>
         </ul>
-      </div><!--/.nav-collapse -->
+      </nav>
     </div>
-  </nav>
+  </header>
 
   <!-- inject element in ui view from routing angular -->
-  <div class="container" ui-view></div>
+  <flash-message duration="5000" show-close="true"></flash-message>
+  <div class="container-fluid" role="main" ui-view></div>
 
-  <script type="text/javascript" src="vendor/jquery/dist/jquery.js"></script>
-  <script type="text/javascript" src="vendor/jquery-ui/jquery-ui.js"></script>
-  <script type="text/javascript" src="vendor/angular/angular.js"></script>
-  <script type="text/javascript" src="vendor/angular-cookies/angular-cookies.js"></script>
-  <script type="text/javascript" src="vendor/angular-flash-alert/dist/angular-flash.js"></script>
-  <script type="text/javascript" src="vendor/angular-resource/angular-resource.js"></script>
-  <script type="text/javascript" src="vendor/angular-sanitize/angular-sanitize.js"></script>
-  <script type="text/javascript" src="vendor/angular-sanitize/angular-sanitize.js"></script>
-  <script type="text/javascript" src="vendor/ng-dialog/js/ngDialog.js"></script>
-  <script type="text/javascript" src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="vendor/moment/moment.js"></script>
+  <script src="vendor/moment/locale/fr.js"></script>
+  <script src="vendor/jquery/dist/jquery.js"></script>
+  <script src="vendor/jquery-ui/jquery-ui.js"></script>
+  <script src="vendor/angular/angular.js"></script>
+  <script src="vendor/angular-repeat-n/dist/angular-repeat-n.js"></script>
+  <script src="vendor/angular-cookies/angular-cookies.js"></script>
+  <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="vendor/angular-flash-alert/dist/angular-flash.js"></script>
+  <script src="vendor/angular-resource/angular-resource.js"></script>
+  <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
+  <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
+  <script src="vendor/ng-dialog/js/ngDialog.js"></script>
+  <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
 
   <!-- custom module -->
-  <script type="text/javascript" src="js/loopback/lb-services.js"></script>
-  <script type="text/javascript" src="js/app.js"></script>
-  <script type="text/javascript" src="js/collaborator/collaborator.ctrl.js"></script>
-  <script type="text/javascript" src="js/collaborator/collaborator.route.js"></script>
-  <script type="text/javascript" src="js/planning/planning.ctrl.js"></script>
-  <script type="text/javascript" src="js/planning/planning.route.js"></script>
-  <script type="text/javascript" src="js/team/team.ctrl.js"></script>
-  <script type="text/javascript" src="js/team/team.route.js"></script>
+  <script src="js/loopback/lb-services.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/collaborator/collaborator.ctrl.js"></script>
+  <script src="js/collaborator/collaborator.route.js"></script>
+  <script src="js/planning/planning.ctrl.js"></script>
+  <script src="js/planning/planning.route.js"></script>
+  <script src="js/team/team.ctrl.js"></script>
+  <script src="js/team/team.route.js"></script>
+  <script src="js/project/project.ctrl.js"></script>
+  <script src="js/project/project.route.js"></script>
+
 </body>
 </html>

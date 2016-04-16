@@ -1,0 +1,26 @@
+<h1>Les projets</h1>
+<div class="row">
+  <div class="col-md-7" role="main">
+    <ul class="list-group" ng-repeat="project in vm.projectData">
+      <li class="list-group-item">{{project.name}}</li>
+    </ul>
+  </div>
+  <div class="col-md-5" >
+    <form name="form" novalidate>
+      <div class="form-group">
+        <label for="projectName">Nom du projet</label>
+        <input type="text" class="form-control" name="projectName" id="projectName" placeholder="Nom du projet" ng-model="vm.newProject.name" required>
+        <div ng-show="form.$submitted || form.projectName.$touched">
+          <div ng-show="form.projectName.$error.required">Nom du projet obligatoire.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="projectDescrition">Description du projet</label>
+        <textarea id="projectDescrition" class="form-control" rows="3" ng-model="vm.newProject.description"></textarea>
+      </div>
+      <input type="button" ng-click="reset()" value="Reset" />
+      <button type="submit" class="btn btn-default" ng-click="vm.createProject(vm.newProject)">Créer le projet</button>
+    </form>
+
+  </div>
+</div>

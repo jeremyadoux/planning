@@ -12,6 +12,9 @@
     },
     "description": {
       "type": "string"
+    },
+    "color": {
+      "type": "string"
     }
   },
   "validations": [],
