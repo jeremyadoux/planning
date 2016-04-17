@@ -6,3 +6,7 @@
 .planning-text {
   font-size: 10px;
 }
+
+.dialog-add-collaborator .ngdialog-content {
+  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+}

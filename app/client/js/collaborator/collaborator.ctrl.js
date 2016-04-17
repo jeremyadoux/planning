@@ -12,6 +12,10 @@
 
     var vm = this;
 
+    if($scope.$parent.vm != null) {
+      vm.parentScope = $scope.$parent.vm;
+    }
+
     vm.limit = 5;
     vm.currentPage = 1;
     vm.collabCount = 0;
@@ -30,7 +34,7 @@
     init();
 
     function init() {
-      vm.projectData = [];
+      vm.collaboratorData = [];
       vm.loadCollaborator();
       vm.countCollaborator();
     }
@@ -116,7 +120,7 @@
         delete collab.password;
       }
 
-      Project.prototype$updateAttributes({ id: collab.id }, collab)
+      Collaborator.prototype$updateAttributes({ id: collab.id }, collab)
         .$promise
         .then(function(response) {
           Flash.create('success', "Le collaborateur "+response.name+" a été mis à jour.");

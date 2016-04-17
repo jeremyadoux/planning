@@ -1,0 +1,16 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+      <h1>Ajouter des collaborateurs - {{vm.parentScope.currentTeamToAdd.name}}</h1>
+      <input type="text" class="form-control" name="search" id="search" placeholder="Rechercher" ng-model="vm.search">
+      <br />
+      <ul class="list-group" ng-repeat="collab in vm.collaboratorData">
+        <li class="list-group-item">
+          <h4 class="list-group-item-heading">{{collab.lastName}} {{collab.firstName}} - <a href ng-click="vm.parentScope.addCollaborator(vm.parentScope.currentTeamToAdd, collab)">Ajouter le collaborateur</a></h4>
+        </li>
+      </ul>
+      <ul class="pagination">
+        <li ng-show="vm.havePreviousPage()"><a ng-click="vm.previousPage()" href><<</a></li>
+        <li ng-show="vm.haveNextPage()"><a ng-click="vm.nextPage()" href>>></a></li>
+      </ul>
+  </div>
+</div>
