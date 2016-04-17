@@ -10,3 +10,8 @@
 .dialog-add-collaborator .ngdialog-content {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
 }
+
+td.selected {
+  background-color: #3875d7 !important;
+  color: #fff;
+}

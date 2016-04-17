@@ -6,9 +6,9 @@
     .controller('PlanningController', PlanningController);
 
 
-  PlanningController.$inject = ['Planning', 'Team', 'Project']
+  PlanningController.$inject = ['Planning', 'Team', 'Project', '$timeout', 'Flash']
 
-  function PlanningController(Planning, Team, Project) {
+  function PlanningController(Planning, Team, Project, $timeout, Flash) {
 
     var vm = this;
     vm.funcSetDay = prepareDataDay;
@@ -21,6 +21,7 @@
     vm.getTeamList = getTeamList;
     vm.getPlanningList = getPlanningList;
     vm.getProjectList = getProjectList;
+    vm.addSelectionToProject = addSelectionToProject;
     vm.init = init;
     vm.getNumber = function(num) {
       return new Array(num);
@@ -145,13 +146,39 @@
 
     function getPlanningByCollabAndDateInPlanning(date, collabId) {
       for(var i = 0; i < vm.planningData.length; i++) {
-        var dateMoment = moment(vm.planningData[0].date);
-        if(dateMoment.isSame(date, 'day') && vm.planningData[i].collaboratorId == collabId) {
-          return vm.planningData[i];
+        //Better perf like this
+        if( vm.planningData[i].collaboratorId == collabId) {
+          var dateMoment = moment(vm.planningData[i].date);
+          if (dateMoment.isSame(date, 'day')) {
+            return vm.planningData[i];
+          }
         }
       }
 
       return false;
     }
+
+    function addSelectionToProject(project) {
+      var createDataPlanningToSave = [];
+      vm.fiddlePlanning.finderSelect("selected").each(function(index){
+        createDataPlanningToSave.push({
+          "date": vm.currentYears+"-"+vm.currentMonth+"-"+$(this).attr('data-day'),
+          "collaboratorId": $(this).attr('data-collab-id'),
+          "projectId": project.id
+        });
+      });
+
+      Planning.createMany(createDataPlanningToSave)
+        .$promise
+        .then(function(response){
+          Flash.create('success', "Le planning a été mis à jour.");
+          vm.init();
+        });
+    }
+
+    //Inject fiddle configuration
+    $timeout(function() {
+      vm.fiddlePlanning = $('#table-planning').finderSelect({children:"td.fiddle-selectable"});
+    });
   }
 })();

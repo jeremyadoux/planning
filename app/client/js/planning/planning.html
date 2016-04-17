@@ -3,7 +3,7 @@
   <div class="col-md-10" role="main">
 
 
-    <table class="table table-bordered planning-text">
+    <table id="table-planning" class="table table-bordered planning-text">
       <thead> <!-- En-tête du tableau -->
       <tr>
         <th>Team</th>
@@ -27,11 +27,11 @@
             {{team.name}}
           </td>
           <td>{{team.collaborators[0].name}}</td>
-          <td ng-repeat="i in vm.getNumber(vm.dataDay) track by $index" ng-style="vm.getColorDay($index + 1, team.collaborators[0].id)"></td>
+          <td ng-repeat="i in vm.getNumber(vm.dataDay) track by $index" ng-style="vm.getColorDay($index + 1, team.collaborators[0].id)" ng-class="{'fiddle-selectable':!vm.isNotWorkingDay($index + 1)}" data-day="{{$index + 1}}" data-collab-id="{{team.collaborators[0].id}}"></td>
         </tr>
         <tr ng-repeat="collab in team.collaborators track by $index" ng-show="$index > 0">
           <td>{{collab.name}}</td>
-          <td ng-repeat="i in vm.getNumber(vm.dataDay) track by $index" ng-style="vm.getColorDay($index + 1, collab.id)"></td>
+          <td ng-repeat="i in vm.getNumber(vm.dataDay) track by $index" ng-style="vm.getColorDay($index + 1, collab.id)" ng-class="{'fiddle-selectable':!vm.isNotWorkingDay($index + 1)}" data-day="{{$index + 1}}" data-collab-id="{{collab.id}}"></td>
         </tr>
         <tr style="display: none;" ng-repeat-end></tr>
       </tbody>
@@ -40,7 +40,9 @@
   <div class="col-md-2">
     <h1>Légende projet</h1>
     <ul class="list-group">
-      <li class="list-group-item" ng-repeat="project in vm.projectData" style="background-color: {{project.color}}">{{project.name}}</li>
+      <li class="list-group-item" ng-repeat="project in vm.projectData" style="background-color: {{project.color}}">
+        <a href ng-click="vm.addSelectionToProject(project)">{{project.name}}</a>
+      </li>
     </ul>
   </div>
 </div>

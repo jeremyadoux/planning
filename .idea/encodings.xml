@@ -8,7 +8,9 @@
     <file url="file://$PROJECT_DIR$/app/client/css/custom.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/client/index.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/client/js/app.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/client/js/collaborator/collaborator-dialog.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/client/js/collaborator/collaborator.ctrl.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/client/js/collaborator/collaborator.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/client/js/collaborator/collaborator.route.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/client/js/planning/planning.ctrl.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/client/js/planning/planning.html" charset="UTF-8" />
@@ -17,9 +19,13 @@
     <file url="file://$PROJECT_DIR$/app/client/js/project/project.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/client/js/project/project.route.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/client/js/team/team.ctrl.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/client/js/team/team.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/client/js/team/team.route.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/common/models/collaborator.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/common/models/collaborator.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/common/models/project.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/common/models/project.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/common/models/team.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/server/server.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/scriptDocker.sh" charset="UTF-8" />
   </component>
