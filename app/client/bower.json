@@ -27,6 +27,7 @@
     "angular-flash-alert": "~2.2.7",
     "jquery-ui": "~1.11.4",
     "moment": "~2.12.0",
-    "angular-repeat-n": "~0.1.5"
+    "angular-repeat-n": "~0.1.5",
+    "angular-bootstrap-colorpicker": "~3.0.25"
   }
 }

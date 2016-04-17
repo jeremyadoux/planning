@@ -5,7 +5,7 @@ module.exports = function(Project) {
     var req = context.req;
     if(req.body.color == null) {
       var color = new RandomColor();
-      req.body.color = color.toHex().value;
+      req.body.color = "#" + color.toHex().value;
     }
     next();
   });

@@ -6,9 +6,9 @@
     .controller('PlanningController', PlanningController);
 
 
-  PlanningController.$inject = ['Planning', 'Team']
+  PlanningController.$inject = ['Planning', 'Team', 'Project']
 
-  function PlanningController(Planning, Team) {
+  function PlanningController(Planning, Team, Project) {
 
     var vm = this;
     vm.funcSetDay = prepareDataDay;
@@ -20,6 +20,7 @@
     vm.getColorDay = getColorDay;
     vm.getTeamList = getTeamList;
     vm.getPlanningList = getPlanningList;
+    vm.getProjectList = getProjectList;
     vm.init = init;
     vm.getNumber = function(num) {
       return new Array(num);
@@ -31,6 +32,7 @@
     vm.currentMonth = dateStart.format("M");
     vm.currentYears = dateStart.format("YYYY");
     vm.funcSetDay(vm.currentMonth);
+    vm.getProjectList();
     vm.init();
 
 
@@ -46,7 +48,7 @@
         var b = moment([vm.currentYears, month, 1]);
       } else {
         var a = moment([vm.currentYears, month - 1, 1]);
-        var b = moment([vm.currentYears+1, 0, 1]);
+        var b = moment([parseInt(vm.currentYears) + 1, 0, 1]);
       }
 
       var nbDay = b.diff(a, 'days');
@@ -94,7 +96,7 @@
         var dateCurrent = moment(vm.currentMonth + "-"+day+"-"+vm.currentYears, "MM-DD-YYYY");
         var planning  = getPlanningByCollabAndDateInPlanning(dateCurrent, collabId)
         if(planning !== false) {
-          return {'background-color':'red'};
+          return {'background-color':planning.project.color};
         }
       }
     }
@@ -122,11 +124,19 @@
         });
     }
 
+    function getProjectList() {
+      Project.find({filter: {order: 'name ASC'}})
+        .$promise
+        .then(function(response) {
+          vm.projectData = response;
+      });
+    }
+
     function getPlanningList() {
       var dateCurrentMin = moment(vm.currentMonth + "-01-"+vm.currentYears, "MM-DD-YYYY");
       var dateCurrentMax = moment(vm.currentMonth + "-01-"+vm.currentYears, "MM-DD-YYYY").add("1", "months");
 
-      Planning.find({filter:{where: {date: {between: [dateCurrentMin.format(),dateCurrentMax.format()]}}}})
+      Planning.find({filter:{include : "project", where: {date: {between: [dateCurrentMin.format(),dateCurrentMax.format()]}}}})
         .$promise
         .then(function(response) {
           vm.planningData = response;

@@ -1,8 +1,17 @@
 <h1>Les projets</h1>
 <div class="row">
   <div class="col-md-7" role="main">
+    <input type="text" class="form-control" name="search" id="search" placeholder="Rechercher" ng-model="vm.search">
+    <br />
     <ul class="list-group" ng-repeat="project in vm.projectData">
-      <li class="list-group-item">{{project.name}}</li>
+      <li class="list-group-item" style="background-color: {{project.color}}">
+        <h4 class="list-group-item-heading">{{project.name}} - <a href ng-click="vm.wantEditProject(project)">Editer le projet</a></h4>
+        <p class="list-group-item-text">{{project.description}}</p>
+      </li>
+    </ul>
+    <ul class="pagination">
+      <li ng-show="vm.havePreviousPage()"><a ng-click="vm.previousPage()" href><<</a></li>
+      <li ng-show="vm.haveNextPage()"><a ng-click="vm.nextPage()" href>>></a></li>
     </ul>
   </div>
   <div class="col-md-5" >
@@ -18,8 +27,13 @@
         <label for="projectDescrition">Description du projet</label>
         <textarea id="projectDescrition" class="form-control" rows="3" ng-model="vm.newProject.description"></textarea>
       </div>
-      <input type="button" ng-click="reset()" value="Reset" />
-      <button type="submit" class="btn btn-default" ng-click="vm.createProject(vm.newProject)">Créer le projet</button>
+      <div class="form-group">
+        <label for="projectColor">Couleur du projet</label>
+        <input colorpicker type="text" name="projectColor" id="projectColor" ng-model="vm.newProject.color" />
+      </div>
+      <button type="submit" class="btn btn-default" ng-click="vm.resetForm(vm.newProject)">Reset</button>
+      <button ng-hide="vm.newProject.id" type="submit" class="btn btn-default" ng-click="vm.createProject(vm.newProject)">Créer le projet</button>
+      <button ng-show="vm.newProject.id" type="submit" class="btn btn-default" ng-click="vm.editProject(vm.newProject)">Editer le projet</button>
     </form>
 
   </div>
