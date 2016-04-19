@@ -68,7 +68,7 @@
     function loadCollaborator() {
       var filter = {filter: {skip: (vm.limit * (vm.currentPage-1)), limit: vm.limit, order: 'lastName ASC'}};
       if(vm.search != null) {
-        filter.filter.where = {or: [{lastName: {like : '.*'+vm.search+'.*'}}, {firstName: {like : '.*'+vm.search+'.*'}}]};
+        filter.filter.where = {or: [{lastName: {regexp : '/.*'+vm.search+'.*/i'}}, {firstName: {regexp : '/.*'+vm.search+'.*/i'}}]};
       }
 
       Collaborator.find(filter)
@@ -81,7 +81,7 @@
     function countCollaborator() {
       var filter = {};
       if(vm.search != null) {
-        filter = {where: {or: [{lastName: {like : '.*'+vm.search+'.*'}}, {firstName: {like : '.*'+vm.search+'.*'}}]}};
+        filter = {where: {or: [{lastName: {regexp : '/.*'+vm.search+'.*/i'}}, {firstName: {regexp : '/.*'+vm.search+'.*/i'}}]}};
       }
 
       Collaborator.count(filter)
