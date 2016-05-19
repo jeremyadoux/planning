@@ -113,9 +113,35 @@
     }
 
     function getTeamList() {
-      Team.find({filter:{ include : "collaborators"} })
+      var dateCurrentMin = moment(vm.currentMonth + "-01-"+vm.currentYears, "MM-DD-YYYY");
+      var dateCurrentMax = moment(vm.currentMonth + "-01-"+vm.currentYears, "MM-DD-YYYY").add("1", "months");
+
+      Team.find({
+        filter:{
+          include : {
+            relation: 'collaborators',
+            scope: {
+              include: {
+                relation: 'plannings',
+                scope: {
+                  where: {
+                    date: {
+                      between: [dateCurrentMin.format(),dateCurrentMax.format()]
+                    }
+                  },
+                  order: 'date ASC',
+                  include: {
+                    relation: 'project'
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
         .$promise
         .then(function(response) {
+          console.log(response);
           for(var i = 0; i < response.length; i++ ) {
             if(response[i].collaborators.length == 0) {
               response.splice(i, 1);
