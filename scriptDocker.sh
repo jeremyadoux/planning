@@ -7,3 +7,5 @@ chmod +x /usr/local/bin/docker-compose
 
 sudo mkdir /home/vagrant/mongodb
 
+cd /vagrant
+sudo docker-compose up -d

@@ -5,6 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "planning"
 
   config.vm.network "private_network", ip: "192.168.100.105"
+  config.vm.network "forwarded_port", guest: 27017, host: 27017
 
   config.vm.provider :virtualbox do |vb|
       vb.name = "planning"
