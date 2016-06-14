@@ -1,14 +1,21 @@
 <h1>La plannification</h1>
 <div class="row">
+  <div class="col-md-4">
+    <span ng-show="vm.filterOnTeamGlobal">Filtre actuel : {{vm.filterOnTeamGlobal.name}} - <a href ng-click="vm.removeFilterTeamAction()">Réinitialiser</a></span>
+    <input ng-model="vm.filterOnTeam" type="text" class="form-control dropdown-toggle" id="filterOnTeam" placeholder="Filtrer sur une équipe" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <ul ng-show="vm.filterOnTeam" class="dropdown-menu dropdown-filter-team" aria-labelledby="filterOnTeam">
+      <li ng-repeat="team in vm.filterOnTeamFilteredTeam"><a href ng-click="vm.filterByTeamAction(team)">{{team.name}}</a></li>
+    </ul>
+  </div>
+</div>
+<div class="row">
   <div class="col-md-10" role="main">
-    
-
     <table id="table-planning" class="table table-bordered planning-text">
       <thead> <!-- En-tête du tableau -->
       <tr>
         <th>Team</th>
         <th>Collaborateur</th>
-        <th  ng-click="vm.previousMonth()"><<</th>
+        <th ng-click="vm.previousMonth()"><<</th>
         <th colspan="{{vm.dataDay - 2}}">{{vm.getCurrentMonthName()}} {{vm.currentYears}}</th>
         <th ng-click="vm.nextMonth()">>></th>
       </tr>

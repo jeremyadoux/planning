@@ -6,11 +6,14 @@
     .controller('PlanningController', PlanningController);
 
 
-  PlanningController.$inject = ['Planning', 'Team', 'Project', '$timeout', 'Flash']
+  PlanningController.$inject = ['$scope', 'Planning', 'Team', 'Project', '$timeout', 'Flash']
 
-  function PlanningController(Planning, Team, Project, $timeout, Flash) {
+  function PlanningController($scope, Planning, Team, Project, $timeout, Flash) {
 
     var vm = this;
+    vm.filterOnTeam = null;
+    vm.filterOnTeamFilteredTeam = [];
+    vm.filterOnTeamGlobal = null;
     vm.funcSetDay = prepareDataDay;
     vm.nextMonth = nextMonth;
     vm.previousMonth = previousMonth;
@@ -22,6 +25,8 @@
     vm.getPlanningList = getPlanningList;
     vm.getProjectList = getProjectList;
     vm.addSelectionToProject = addSelectionToProject;
+    vm.filterByTeamAction = filterByTeamAction;
+    vm.removeFilterTeamAction = removeFilterTeamAction;
     vm.init = init;
     vm.getNumber = function(num) {
       return new Array(num);
@@ -36,6 +41,10 @@
     vm.getProjectList();
     vm.init();
 
+
+    $scope.$watch('vm.filterOnTeam', function() {
+      filterFilterTeam();
+    });
 
     function init() {
       vm.planningData = [];
@@ -95,7 +104,7 @@
         return {'background-color':'black'};
       } else {
         var dateCurrent = moment(vm.currentMonth + "-"+day+"-"+vm.currentYears, "MM-DD-YYYY");
-        var planning  = getPlanningByCollabAndDateInPlanning(dateCurrent, collabId)
+        var planning  = getPlanningByCollabAndDateInPlanning(dateCurrent, collabId);
         if(planning !== false) {
           return {'background-color':planning.project.color};
         }
@@ -116,7 +125,7 @@
       var dateCurrentMin = moment(vm.currentMonth + "-01-"+vm.currentYears, "MM-DD-YYYY");
       var dateCurrentMax = moment(vm.currentMonth + "-01-"+vm.currentYears, "MM-DD-YYYY").add("1", "months");
 
-      Team.find({
+      var teamFilter = {
         filter:{
           include : {
             relation: 'collaborators',
@@ -138,10 +147,17 @@
             }
           }
         }
-      })
+      };
+
+      if(vm.filterOnTeamGlobal != null && vm.filterOnTeamGlobal) {
+        teamFilter.filter.where = {
+          id: vm.filterOnTeamGlobal.id
+        };
+      }
+
+      Team.find(teamFilter)
         .$promise
         .then(function(response) {
-          console.log(response);
           for(var i = 0; i < response.length; i++ ) {
             if(response[i].collaborators.length == 0) {
               response.splice(i, 1);
@@ -200,6 +216,30 @@
           Flash.create('success', "Le planning a été mis à jour.");
           vm.init();
         });
+    }
+
+    function filterFilterTeam() {
+      Team.find({
+        filter: {
+          where: { name: {like: '.*'+vm.filterOnTeam+'.*'}}
+        }
+      })
+        .$promise
+        .then(function(response) {
+          vm.filterOnTeamFilteredTeam = response;
+        });
+    }
+
+    function filterByTeamAction(team) {
+      vm.filterOnTeam = null;
+      vm.filterOnTeamGlobal = team;
+      vm.getTeamList();
+    }
+
+    function removeFilterTeamAction() {
+      vm.filterOnTeam = null;
+      vm.filterOnTeamGlobal = null;
+      vm.getTeamList();
     }
 
     //Inject fiddle configuration
