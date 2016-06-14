@@ -43,7 +43,9 @@
 
 
     $scope.$watch('vm.filterOnTeam', function() {
-      filterFilterTeam();
+      $timeout(function() {
+        filterFilterTeam();
+      }, 1000);
     });
 
     function init() {
