@@ -45,7 +45,7 @@
     $scope.$watch('vm.filterOnTeam', function() {
       $timeout(function() {
         filterFilterTeam();
-      }, 1000);
+      }, 300);
     });
 
     function init() {
@@ -105,7 +105,7 @@
       if(vm.isNotWorkingDay(day)) {
         return {'background-color':'black'};
       } else {
-        var dateCurrent = moment(vm.currentMonth + "-"+day+"-"+vm.currentYears, "MM-DD-YYYY");
+        var dateCurrent = moment.utc(vm.currentMonth + "-"+day+"-"+vm.currentYears, "MM-DD-YYYY");;
         var planning  = getPlanningByCollabAndDateInPlanning(dateCurrent, collabId);
         if(planning !== false) {
           return {'background-color':planning.project.color};
@@ -163,6 +163,12 @@
           for(var i = 0; i < response.length; i++ ) {
             if(response[i].collaborators.length == 0) {
               response.splice(i, 1);
+            } else {
+              for(var j in response[i].collaborators) {
+                for(var h in vm.getNumber(vm.dataDay)) {
+
+                }
+              }
             }
           }
           vm.teamListData = response;
@@ -173,7 +179,7 @@
       Project.find({filter: {order: 'name ASC'}})
         .$promise
         .then(function(response) {
-          vm.projectData = response;
+           vm.projectData = response;
       });
     }
 
@@ -192,7 +198,7 @@
       for(var i = 0; i < vm.planningData.length; i++) {
         //Better perf like this
         if( vm.planningData[i].collaboratorId == collabId) {
-          var dateMoment = moment(vm.planningData[i].date);
+          var dateMoment = moment.utc(vm.planningData[i].date)
           if (dateMoment.isSame(date, 'day')) {
             return vm.planningData[i];
           }
@@ -205,8 +211,19 @@
     function addSelectionToProject(project) {
       var createDataPlanningToSave = [];
       vm.fiddlePlanning.finderSelect("selected").each(function(index){
+        var monthToSave = vm.currentMonth.toString();
+        var dayToSave = $(this).attr('data-day').toString();
+
+        if(monthToSave.length == 1) {
+          monthToSave = "0"+monthToSave;
+        }
+
+        if(dayToSave.length == 1) {
+          dayToSave = "0"+dayToSave;
+        }
+
         createDataPlanningToSave.push({
-          "date": vm.currentYears+"-"+vm.currentMonth+"-"+$(this).attr('data-day'),
+          "date": vm.currentYears+"-"+monthToSave+"-"+dayToSave+"T00:00:00.000Z",
           "collaboratorId": $(this).attr('data-collab-id'),
           "projectId": project.id
         });
