@@ -12,6 +12,9 @@
     },
     "nbHours": {
       "type": "number"
+    },
+    "dateSimplified": {
+      "type": "string"
     }
   },
   "validations": [],

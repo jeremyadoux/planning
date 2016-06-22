@@ -115,8 +115,8 @@
 
     function isNotWorkingDay(day) {
       var dateCurrent = moment(vm.currentMonth + "-"+day+"-"+vm.currentYears, "MM-DD-YYYY");
-      var nbCurrantDay = dateCurrent.format("e");
-      if(nbCurrantDay == 5 || nbCurrantDay == 6) {
+      var nbCurrentDay = dateCurrent.format("e");
+      if(nbCurrentDay == 5 || nbCurrentDay == 6) {
         return true;
       } else {
         return false;
@@ -160,17 +160,37 @@
       Team.find(teamFilter)
         .$promise
         .then(function(response) {
+          //First prepare team data add date in first parameter for better element configuration
+          var dataPlannings = {
+            project: {}
+          };
+          for(var cpt = 0; cpt < vm.dataDay; cpt++) {
+            var dataInformation = {};
+            if(isNotWorkingDay(cpt+1)) {
+
+              dataInformation.project = {
+                color: 'black',
+                notWorkingDay: true
+              };
+            }
+            dataPlannings[vm.currentYears.toString()+vm.currentMonth.toString()+(cpt+1).toString()] = dataInformation;
+          }
+
           for(var i = 0; i < response.length; i++ ) {
             if(response[i].collaborators.length == 0) {
               response.splice(i, 1);
             } else {
               for(var j in response[i].collaborators) {
-                for(var h in vm.getNumber(vm.dataDay)) {
-
+                response[i].collaborators[j].dataPlannings = {};
+                angular.copy(dataPlannings, response[i].collaborators[j].dataPlannings);
+                //Access to planning data saving for each collaborator in this team
+                for(var h in response[i].collaborators[j].plannings) {
+                  response[i].collaborators[j].dataPlannings[response[i].collaborators[j].plannings[h].dateSimplified] = response[i].collaborators[j].plannings[h];
                 }
               }
             }
           }
+
           vm.teamListData = response;
         });
     }
@@ -232,6 +252,7 @@
       Planning.createMany(createDataPlanningToSave)
         .$promise
         .then(function(response){
+          //@TODO faire en sorte qu'on n'est pas besoin de faire un nouvel init après l'enregistrement.
           Flash.create('success', "Le planning a été mis à jour.");
           vm.init();
         });

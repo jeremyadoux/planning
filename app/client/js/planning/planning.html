@@ -34,11 +34,11 @@
             {{team.name}}
           </td>
           <td>{{team.collaborators[0].name}}</td>
-          <td ng-repeat="i in vm.getNumber(vm.dataDay) track by $index" ng-style="vm.getColorDay($index + 1, team.collaborators[0].id)" ng-class="{'fiddle-selectable':!vm.isNotWorkingDay($index + 1)}" data-day="{{$index + 1}}" data-collab-id="{{team.collaborators[0].id}}"></td>
+          <td ng-repeat="planning in team.collaborators[0].dataPlannings track by $index" ng-style="{'background-color': planning.project.color}" ng-class="{'fiddle-selectable':!planning.project.notWorkingDay}" data-day="{{$index + 1}}" data-collab-id="{{team.collaborators[0].id}}"></td>
         </tr>
         <tr ng-repeat="collab in team.collaborators track by $index" ng-show="$index > 0">
           <td>{{collab.name}}</td>
-          <td ng-repeat="i in vm.getNumber(vm.dataDay) track by $index" ng-style="vm.getColorDay($index + 1, collab.id)" ng-class="{'fiddle-selectable':!vm.isNotWorkingDay($index + 1)}" data-day="{{$index + 1}}" data-collab-id="{{collab.id}}"></td>
+          <td ng-repeat="planning in collab.dataPlannings track by $index" ng-style="{'background-color': planning.project.color}" ng-class="{'fiddle-selectable':!planning.project.notWorkingDay}" data-day="{{$index + 1}}" data-collab-id="{{collab.id}}"></td>
         </tr>
         <tr style="display: none;" ng-repeat-end></tr>
       </tbody>
